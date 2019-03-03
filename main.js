@@ -4,20 +4,8 @@ const os = require('os');
 const LocalStorage = require('node-localstorage').LocalStorage;
 const WebSocket = require('ws');
 
-const keybindConfigBasic = require('./keybindConfigBasic');
-const keybindConfigAdvanced = require('./keybindConfigAdvanced');
-
-const keybindMapping = {
-  engines: 'ENGINES',
-  flightReady: 'FLIGHT_READY',
-  headlights: 'HEADLIGHTS',
-  landingGear: 'LANDING_GEAR',
-  power: 'POWER'
-};
-
 const localStorage = new LocalStorage('./settings');
 let listening = localStorage.getItem('listening') === 'true';
-let advancedConfig = localStorage.getItem('advanced') === 'true';
 let tray;
 
 // Get local IP address
@@ -33,7 +21,6 @@ app.on('ready', () => {
   const contextMenu = Menu.buildFromTemplate([
     {label: `IP Address: ${ipAddress}`},
     {checked: listening, click: toggleListening, label: 'Listening', type: 'checkbox'},
-    {checked: advancedConfig, click: toggleAdvancedConfig, label: 'Use Advanced Config', type: 'checkbox'},
     {click: app.quit, label: 'Quit'}
   ]);
 
@@ -59,25 +46,11 @@ function setupWebSocketServer() {
     });
 
     ws.on('message', message => {
-      if (listening) {
-        const currentConfig = advancedConfig ? keybindConfigAdvanced : keybindConfigBasic;
-        const keyCommand = currentConfig[keybindMapping[message]];
-
-        if (/\s/.test(keyCommand)) {
-          ks.sendCombination(keyCommand.split(' '));
-        } else {
-          setTimeout(() => {
-            ks.sendKey(keyCommand);
-          }, 1000);
-        }
+      if (listening && message) {
+        ks.sendCombination(message.split(' '));
       }
     });
   });
-}
-
-function toggleAdvancedConfig(event) {
-  advancedConfig = event.checked;
-  localStorage.setItem('advanced', advancedConfig);
 }
 
 function toggleListening(event) {
