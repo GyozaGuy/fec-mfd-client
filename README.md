@@ -1,4 +1,4 @@
-# FEC MFD Client
+# FEC MFD Server
 Listens for connections from FEC MFD displays.
 
 This is being developed for the Free Enterprise Confederacy, but can be used by anybody.

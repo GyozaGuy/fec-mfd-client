@@ -25,7 +25,7 @@ app.on('ready', () => {
   ]);
 
   tray = new Tray(__dirname + '/fec.png');
-  tray.setToolTip('FEC Commlink');
+  tray.setToolTip('FEC MFD Server');
   tray.setContextMenu(contextMenu);
 
   setupWebSocketServer();
