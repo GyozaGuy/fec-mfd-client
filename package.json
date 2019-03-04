@@ -4,13 +4,16 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "build": "rimraf dist && electron-packager . --platform=win32 --arch=x64 --icon=fec --out=dist",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^4.0.6"
+    "electron": "^4.0.6",
+    "electron-packager": "^13.1.0",
+    "rimraf": "^2.6.3"
   },
   "dependencies": {
     "node-key-sender": "^1.0.11",
