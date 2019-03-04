@@ -9,7 +9,7 @@ Make sure a Java 8+ runtime is installed on your computer: [https://www.oracle.c
 # Build
 To build the application yourself, make sure Git and Node are installed and follow these steps in your terminal:
 ```
-git clone https://github.com/GyozaGuy/fec-mfd-client.git
+git clone https://github.com/GyozaGuy/fec-mfd-server.git
 cd fec-mfd-client
 npm i
 npm run build
