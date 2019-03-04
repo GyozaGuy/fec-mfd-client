@@ -1,5 +1,7 @@
-# fec-mfd-client
+# FEC MFD Client
 Listens for connections from FEC MFD displays.
+
+This is being developed for the Free Enterprise Confederacy, but can be used by anybody.
 
 # Prerequisites
 Make sure a Java 8+ runtime is installed on your computer: [https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
