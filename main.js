@@ -4,6 +4,8 @@ const os = require('os');
 const LocalStorage = require('node-localstorage').LocalStorage;
 const WebSocket = require('ws');
 
+ks.setOption('caseCorrection', true);
+
 const localStorage = new LocalStorage('./settings');
 let listening = localStorage.getItem('listening') === 'true';
 let tray;
@@ -47,7 +49,27 @@ function setupWebSocketServer() {
 
     ws.on('message', message => {
       if (listening && message) {
-        ks.sendCombination(message.split(' '));
+        if (/\$\$/.test(message)) {
+          const segments = message.split(/\s?\$\$\s?/i);
+
+          segments.forEach(segment => {
+            setTimeout(() => {
+              if (/"".*""/.test(segment)) {
+                  ks.sendText(segment.replace(/""/g, ''));
+              } else {
+                ks.sendCombination(segment.split(' '));
+              }
+            }, 100);
+          });
+        } else {
+          if (/"".*""/.test(message)) {
+            setTimeout(() => {
+              ks.sendText(message.replace(/""/g, ''));
+            });
+          } else {
+            ks.sendCombination(message.split(' '));
+          }
+        }
       }
     });
   });
